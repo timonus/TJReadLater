@@ -50,9 +50,6 @@
 #pragma mark -
 #pragma mark URL Saving
 
-#pragma mark -
-#pragma mark URL Saving
-
 + (void)saveURL:(NSString *)url title:(NSString *)title callback:(void (^)(BOOL success))callback {
 	dispatch_async(dispatch_get_global_queue(0, 0), ^{
 		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[@"https://www.instapaper.com/api/add" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
