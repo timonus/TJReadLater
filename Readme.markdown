@@ -1,6 +1,6 @@
 # TJReadLater
 
-Stupidly easy support for the [Read It Later](http://www.readitlater.com), [Instapaper](http://www.instapaer.com), and [Delicious](http://www.delicious.com) bookmarking services on the iOS.
+Stupidly easy support for the [Read It Later](http://www.readitlater.com), [Instapaper](http://www.instapaper.com), and [Delicious](http://www.delicious.com) bookmarking services on the iOS.
 
 ## TJReadingService
 
