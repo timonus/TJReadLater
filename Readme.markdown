@@ -20,6 +20,10 @@ If manual authorization isn't your cup of tea, TJReadLater provides a convenienc
 
 Bookmark saving is done via the `+ (void)saveURL:(NSString *)url title:(NSString *)title callback:(void (^)(BOOL success))callback` method. `url` is the deisred URL to be saved, `title` is the (optional) title of the link to be saved, and callback is invoked on the main thread (if not `nil`) at the completion of the save just like with auth. `success` indicates whether or not the operation was successful, just like with auth.
 
+## Notes
+
+- The Read It Later API requires an [API Key](http://readitlaterlist.com/api/signup/). In order to use the TJReadItLater object, you must fill in `API_KEY` and `APP_NAME` in TJReadItLater.m.
+
 ## TBD
 
 - Make `saveURL:title:callback:` take `id` for URL and use either `NSURL` or `NSString`
