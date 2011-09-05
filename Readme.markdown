@@ -8,13 +8,13 @@ Each of the `TJInstapaper`, `TJReadItLater`, and `TJDelicious` objects inherit f
 
 ## Authorization
 
-In order to authenticate a user with a service, simply call `+ (void)authorizeWithUsername:(NSString *)username password:(NSString *)password callback:(void (^)(BOOL success))callback`, once the authorization is complete, `callback` will be invoked on the main thread (if not `nil`) and `success` will indicate whether or not the authorization was successful. When successful auth occurs, the username/password combo is stored automatically. You can call `+ (BOOL)isLoggedIn` to determine whether or not a user is logged in in the future, and `+ (void)logout` to log out from the service.
+In order to authenticate a user with a service, simply call `+ (void)authorizeWithUsername:(NSString *)username password:(NSString *)password callback:(void (^)(BOOL success))callback`, once the authorization is complete, `callback` will be invoked on the main thread (if not `nil`) and `success` will indicate whether or not the authorization was successful. When successful auth occurs, the username/password combo is stored automatically. You can call `+ (BOOL)isLoggedIn` to determine whether or not a user is logged into the service, `+ (NSString *)username` to get the currently logged in user's username, and `+ (void)logout` to log out from the service.
 
 Additionally, the `+ (NSString *)name` and `+ (NSString *)loginLabel` methods are in place to get the name of a given service and what should appear in the login label (i.e. "Username", "Email", or "Username/Email").
 
 ## Authorization UI
 
-If manual authorization isn't your cup of tea, TJReadLater provides a convenience view controller for authorization of each service. Calling `+ (UIViewController *)authorizationViewController` on a `TJReadingService` provides a view controller that can automatically handle authorization. The same `+ (BOOL)isLoggedIn`, `+ (void)logout`, and `+ (NSString *)username` methods work even when using these view controllers.
+If manual authorization isn't your cup of tea, TJReadLater provides convenience view controllers for authorization of each service. Calling `+ (UIViewController *)authorizationViewController` on a `TJReadingService` provides a view controller that can automatically handle authorization, this view controller should be presented modally. The same `+ (BOOL)isLoggedIn`, `+ (void)logout`, and `+ (NSString *)username` methods work when using these view controllers.
 
 ## Saving a Bookmark
 
@@ -29,3 +29,4 @@ Bookmark saving is done via the `+ (void)saveURL:(NSString *)url title:(NSString
 - Make `saveURL:title:callback:` take `id` for URL and use either `NSURL` or `NSString`
 - Provide more descriptive error messages in the callbacks
 - Upgrade `TJDelicious` to use the del.icio.us v2 API
+- Add [Readability](http://www.readability.com/) support
