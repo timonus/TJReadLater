@@ -128,9 +128,10 @@
 				CGFloat labelWidth = [@"Password" sizeWithFont:[UIFont boldSystemFontOfSize:14.0f]].width;
 				[_passwordField setFrame:CGRectMake(2.0f * padding + labelWidth, 0.0f, [cell contentView].bounds.size.width - 3.0f * padding - labelWidth, [cell contentView].bounds.size.height)];
 				[_passwordField setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-				[_usernameField setReturnKeyType:UIReturnKeyGo];
+				[_passwordField setReturnKeyType:UIReturnKeyGo];
 				[_passwordField setDelegate:self];
 				[_passwordField setSecureTextEntry:YES];
+				[_passwordField setClearsOnBeginEditing:YES];
 				[_passwordField setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
 			}
 			
