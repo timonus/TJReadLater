@@ -2,6 +2,7 @@
 // By Tim Johnsen
 
 #import "TJReadingService.h"
+#import "TJReadLater.h"
 
 @implementation TJReadingService
 
@@ -40,6 +41,20 @@
 #pragma mark URL Saving
 
 + (void)saveURL:(NSString *)url title:(NSString *)title callback:(void (^)(BOOL success))callback {
+}
+
+#pragma mark -
+#pragma mark Authorization View Controllers
+
++ (UIViewController *)authorizationViewController {
+	return [[[UINavigationController alloc] initWithRootViewController:[[[TJReadingServiceViewController alloc] initWithService:self] autorelease]] autorelease];
+}
+
+#pragma mark -
+#pragma mark All Services
+
++ (NSArray *)readingServices {
+	return [NSArray arrayWithObjects:[TJInstapaper class], [TJReadItLater class], [TJDelicious class], nil];
 }
 
 @end
