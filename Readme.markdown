@@ -1,6 +1,6 @@
 # TJReadLater
 
-Stupidly easy support for the [Instapaper](http://www.instapaper.com), [Read It Later](http://www.readitlater.com), and [Delicious](http://www.delicious.com) bookmarking services on the iOS.
+Stupidly easy support for the [Instapaper](http://www.instapaper.com), [Read It Later](http://www.readitlater.com), and [Delicious](http://www.delicious.com) bookmarking services on the iOS. Just `#import "TJReadLater.h"` and let 'er rip!
 
 ## TJReadingService
 
