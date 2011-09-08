@@ -4,7 +4,7 @@ Stupidly easy support for the [Instapaper](http://www.instapaper.com), [Read It 
 
 ## TJReadingService
 
-Each of the `TJInstapaper`, `TJReadItLater`, and `TJDelicious` objects inherit from the `TJReadingService` which exposes a common inerface for two simple bookmarking actions: **authorization**, and **saving a bookmark**. These are implemented as simple class methods with callbacks in the form of blocks, there is optional **authorization UI** added for convenience. You can access all of the available reading services by calling `+ (NSArray *)readingServices` on `TJReadingService`.
+Each of the `TJInstapaper`, `TJReadItLater`, and `TJDelicious` objects inherit from the `TJReadingService` object which exposes a common inerface for two simple bookmarking actions: **authorization**, and **saving a bookmark**. These are implemented as simple class methods with callbacks in the form of blocks, there is optional **authorization UI** added for convenience. You can access all of the available reading services by calling `+ (NSArray *)readingServices` on `TJReadingService`.
 
 ## Authorization
 
