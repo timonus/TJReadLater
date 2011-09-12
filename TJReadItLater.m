@@ -32,8 +32,8 @@
 		BOOL success = !error && [(NSHTTPURLResponse *)response statusCode] == 200;
 		
 		if (success) {
-			[[NSUserDefaults standardUserDefaults] setObject:username forKey:[NSString stringWithFormat:@"%@Username", [[self class] description]]];
-			[[NSUserDefaults standardUserDefaults] setObject:password forKey:[NSString stringWithFormat:@"%@Password", [[self class] description]]];
+			[[NSUserDefaults standardUserDefaults] setObject:username forKey:[NSString stringWithFormat:@"%@Username", NSStringFromClass(self)]];
+			[[NSUserDefaults standardUserDefaults] setObject:password forKey:[NSString stringWithFormat:@"%@Password", NSStringFromClass(self)]];
 			[[NSUserDefaults standardUserDefaults] synchronize];
 		}
 		
@@ -51,7 +51,7 @@
 + (void)saveURL:(NSString *)url title:(NSString *)title callback:(void (^)(BOOL success))callback {
 	dispatch_async(dispatch_get_global_queue(0, 0), ^{
 		
-		NSString *requestURL = [NSString stringWithFormat:@"https://readitlaterlist.com/v2/add?username=%@&password=%@&apikey=%@&url=%@", [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@Username", [[self class] description]]], [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@Password", [[self class] description]]], API_KEY, url];
+		NSString *requestURL = [NSString stringWithFormat:@"https://readitlaterlist.com/v2/add?username=%@&password=%@&apikey=%@&url=%@", [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@Username", NSStringFromClass(self)]], [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@Password", NSStringFromClass(self)]], API_KEY, url];
 		
 		if (title) {
 			requestURL = [requestURL stringByAppendingFormat:@"&title=%@", title];

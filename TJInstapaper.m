@@ -34,8 +34,8 @@
 		BOOL success = !error && [(NSHTTPURLResponse *)response statusCode] == 200;
 		
 		if (success) {
-			[[NSUserDefaults standardUserDefaults] setObject:username forKey:[NSString stringWithFormat:@"%@Username", [[self class] description]]];
-			[[NSUserDefaults standardUserDefaults] setObject:password forKey:[NSString stringWithFormat:@"%@Password", [[self class] description]]];
+			[[NSUserDefaults standardUserDefaults] setObject:username forKey:[NSString stringWithFormat:@"%@Username", NSStringFromClass(self)]];
+			[[NSUserDefaults standardUserDefaults] setObject:password forKey:[NSString stringWithFormat:@"%@Password", NSStringFromClass(self)]];
 			[[NSUserDefaults standardUserDefaults] synchronize];
 		}
 		
@@ -55,7 +55,7 @@
 		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[@"https://www.instapaper.com/api/add" stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
 		[request setHTTPMethod:@"POST"];
 		
-		NSString *requestString = [NSString stringWithFormat:@"username=%@&password=%@&url=%@", [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@Username", [[self class] description]]], [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@Password", [[self class] description]]], url];
+		NSString *requestString = [NSString stringWithFormat:@"username=%@&password=%@&url=%@", [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@Username", NSStringFromClass(self)]], [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@Password", NSStringFromClass(self)]], url];
 		if (title) {
 			requestString = [requestString stringByAppendingFormat:@"&title=%@", [title stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
 		}
