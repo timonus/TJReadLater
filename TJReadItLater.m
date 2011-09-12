@@ -70,6 +70,13 @@
 		
 		BOOL success = !error && [(NSHTTPURLResponse *)response statusCode] == 200;
 		
+		if (!success) {
+			if ([(NSHTTPURLResponse *)response statusCode] == 401) {
+				// Username or password changed
+				[self logout];
+			}
+		}
+		
 		if (callback) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				callback(success);
