@@ -254,7 +254,7 @@
 			[[self tableView] reloadData];
 			
 		} else {
-			[[[[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Couldn't sign in to %@ at this time, check your username, password, and connectivity", [_readingService name]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] autorelease] show];
+			[[[[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Couldn't sign in to %@ at this time. Check your username, password, and connectivity.", [_readingService name]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] autorelease] show];
 		}
 	}];
 }
