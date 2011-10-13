@@ -17,7 +17,7 @@
 #pragma mark NSObject
 
 - (id)init {
-	if (self = [super initWithStyle:UITableViewStyleGrouped]) {
+	if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
 		[self setModalPresentationStyle:UIModalPresentationPageSheet];
 	}
 	
@@ -215,7 +215,7 @@
 #pragma mark Custom Initialization
 
 - (id)initWithService:(Class)service {
-	if (self = [self init]) {
+	if ((self = [self init])) {
 		_readingService = [service retain];
 	}
 	
