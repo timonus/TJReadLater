@@ -106,7 +106,7 @@
 					[_usernameField setReturnKeyType:UIReturnKeyNext];
 					[_usernameField setDelegate:self];
 					[_usernameField setKeyboardType:UIKeyboardTypeEmailAddress];
-					[_usernameField setSpellCheckingType:UITextSpellCheckingTypeNo];
+					[_usernameField setAutocorrectionType:UITextAutocorrectionTypeNo];
 					[_usernameField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
 					[_usernameField setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
 					
