@@ -3,6 +3,7 @@
 
 #import "TJReadItLater.h"
 
+#warning Missing Read It Later Credentials
 #define API_KEY @"<Your API Key Here>"
 #define APP_NAME @"<Your App Name Here>"
 
