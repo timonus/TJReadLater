@@ -52,7 +52,7 @@
 		
 		NSString *requestURL = [NSString stringWithFormat:@"https://%@:%@@api.pinboard.in/v1/posts/add?url=%@&description=%@", [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@Username", NSStringFromClass(self)]], [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@Password", NSStringFromClass(self)]], url, title ? title : url];
 		if (!title) {
-			NSLog(@"[TJReadLater] ERROR: Pinboard API does not support bookmarking with titles, adding URL as the title");
+			NSLog(@"[TJReadLater] ERROR: Pinboard API does not support bookmarking without titles, adding URL as the title");
 		}
 		
 		requestURL = [requestURL stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];

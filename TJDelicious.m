@@ -53,7 +53,7 @@
 		
 		NSString *requestString = [NSString stringWithFormat:@"https://api.del.icio.us/v1/posts/add?url=%@&title=%@", url, title ? title : url];
 		if (!title) {
-			NSLog(@"[TJReadLater] ERROR: delicious API does not support bookmarking with titles, adding URL as the title");
+			NSLog(@"[TJReadLater] ERROR: delicious API does not support bookmarking without titles, adding URL as the title");
 		}
 		
 		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[requestString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]]];
