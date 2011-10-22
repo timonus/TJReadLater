@@ -50,10 +50,10 @@
 + (void)saveURL:(NSString *)url title:(NSString *)title callback:(void (^)(BOOL success))callback {
 	dispatch_async(dispatch_get_global_queue(0, 0), ^{
 		
-		NSString *requestURL = [NSString stringWithFormat:@"https://%@:%@@api.pinboard.in/v1/posts/add?url=%@", [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@Username", NSStringFromClass(self)]], [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@Password", NSStringFromClass(self)]], [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+		NSString *requestURL = [NSString stringWithFormat:@"https://%@:%@@api.pinboard.in/v1/posts/add?url=%@", [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@Username", NSStringFromClass(self)]], [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@Password", NSStringFromClass(self)]], url];
 		
 		if (title) {
-			requestURL = [requestURL stringByAppendingFormat:@"&description=%@", [title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+			requestURL = [requestURL stringByAppendingFormat:@"&description=%@", title];
 		}
 		
 		requestURL = [requestURL stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
