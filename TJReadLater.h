@@ -6,5 +6,6 @@
 #import "TJReadItLater.h"
 #import "TJInstapaper.h"
 #import "TJDelicious.h"
+#import "TJPinboard.h"
 
 #import "TJReadingServiceViewController.h"
