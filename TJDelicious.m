@@ -51,7 +51,7 @@
 + (void)saveURL:(NSString *)url title:(NSString *)title callback:(void (^)(BOOL success))callback {
 	dispatch_async(dispatch_get_global_queue(0, 0), ^{
 		
-		NSString *requestString = [NSString stringWithFormat:@"https://api.del.icio.us/v1/posts/add?url=%@&title=%@", url, title ? title : url];
+		NSString *requestString = [NSString stringWithFormat:@"https://api.del.icio.us/v1/posts/add?url=%@&description=%@", url, title ? title : url];
 		if (!title) {
 			NSLog(@"[TJReadLater] ERROR: delicious API does not support bookmarking without titles, adding URL as the title");
 		}
