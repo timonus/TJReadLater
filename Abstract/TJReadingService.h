@@ -5,6 +5,7 @@
 
 + (NSString *)name;
 + (NSString *)loginLabel;
++ (NSString *)signUpURL;
 
 + (BOOL)isLoggedIn;
 + (NSString *)username;

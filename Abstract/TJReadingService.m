@@ -17,6 +17,10 @@
 	return @"Username";
 }
 
++ (NSString *)signUpURL {
+	return nil;
+}
+
 #pragma mark -
 #pragma mark Authorization
 

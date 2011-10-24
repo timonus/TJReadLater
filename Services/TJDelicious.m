@@ -13,6 +13,10 @@
 	return @"delicious";
 }
 
++ (NSString *)signUpURL {
+	return @"http://delicious.com/register";
+}
+
 #pragma mark -
 #pragma mark Authorization
 
