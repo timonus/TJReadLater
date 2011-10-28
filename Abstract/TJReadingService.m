@@ -58,7 +58,7 @@
 #pragma mark All Services
 
 + (NSArray *)readingServices {
-	return [NSArray arrayWithObjects:[TJInstapaper class], [TJReadItLater class], [TJDelicious class], nil];
+	return [NSArray arrayWithObjects:[TJInstapaper class], [TJReadItLater class], [TJDelicious class], [TJPinboard class], nil];
 }
 
 @end
