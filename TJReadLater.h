@@ -7,5 +7,6 @@
 #import "TJInstapaper.h"
 #import "TJDelicious.h"
 #import "TJPinboard.h"
+#import "TJKippt.h"
 
 #import "TJReadingServiceViewController.h"
