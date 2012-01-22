@@ -6,7 +6,7 @@
 #warning Missing Kippt API Key
 #define API_KEY @""
 
-@implementation TJKipptService
+@implementation TJKippt
 
 #pragma mark -
 #pragma mark Strings

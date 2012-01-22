@@ -3,6 +3,6 @@
 
 #import "TJReadingService.h"
 
-@interface TJKipptService : TJReadingService
+@interface TJKippt : TJReadingService
 
 @end
