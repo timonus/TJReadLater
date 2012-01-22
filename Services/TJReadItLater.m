@@ -17,7 +17,7 @@
 }
 
 #pragma mark -
-#pragma mark Authorization
+#pragma mark Private
 
 + (NSURLRequest *)_requestForAuthWithUsername:(NSString *)username password:(NSString *)password {
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://readitlaterlist.com/v2/auth?username=%@&password=%@&apikey=%@", username, password, API_KEY]]];	
