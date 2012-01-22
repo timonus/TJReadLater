@@ -4,8 +4,6 @@
 #import "TJReadItLater.h"
 #import "TJReadingService.h"
 
-@interface TJInstapaper : TJReadingService {
-
-}
+@interface TJInstapaper : TJReadingService
 
 @end

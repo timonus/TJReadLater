@@ -10,6 +10,7 @@
 + (BOOL)isLoggedIn;
 + (NSString *)username;
 + (void)logout;
++ (void)saveUsername:(NSString *)username password:(NSString *)password;
 
 + (void)authorizeWithUsername:(NSString *)username password:(NSString *)password callback:(void (^)(BOOL success))callback;
 + (void)saveURL:(NSString *)url title:(NSString *)title callback:(void (^)(BOOL success))callback;
