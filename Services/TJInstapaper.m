@@ -17,6 +17,10 @@
 	return @"Username/Email";
 }
 
++ (NSString *)signUpURL {
+	return @"http://www.instapaper.com/user/register";
+}
+
 #pragma mark -
 #pragma mark Private
 

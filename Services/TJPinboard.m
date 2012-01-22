@@ -13,6 +13,10 @@
 	return @"Pinboard";
 }
 
++ (NSString *)signUpURL {
+	return @"https://pinboard.in/signup/";
+}
+
 #pragma mark -
 #pragma mark Private
 

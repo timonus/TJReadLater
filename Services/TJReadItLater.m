@@ -16,6 +16,10 @@
 	return @"Read It Later";
 }
 
++ (NSString *)signUpURL {
+	return @"http://readitlaterlist.com/signup";
+}
+
 #pragma mark -
 #pragma mark Private
 
