@@ -2,9 +2,7 @@
 // By Tim Johnsen
 
 #import "TJKippt.h"
-
-#warning Missing Kippt API Key
-#define API_KEY @""
+#import "NSData+Base64.h"
 
 @implementation TJKippt
 
@@ -27,6 +25,12 @@
 
 + (NSURLRequest *)_requestForAuthWithUsername:(NSString *)username password:(NSString *)password {
 	NSMutableURLRequest *request = nil;
+	
+	request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://kippt.com/api/v0/account/verify/"]]];
+	[request setValue:[NSString stringWithFormat:@"Basic %@", [[[NSString stringWithFormat:@"%@:%@", username, password] dataUsingEncoding:NSUTF8StringEncoding] base64EncodedString]] forHTTPHeaderField:@"Authorization"];
+	
+	[request setHTTPMethod:@"GET"];
+	
 	return request;
 }
 
