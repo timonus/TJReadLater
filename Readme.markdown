@@ -23,6 +23,7 @@ Bookmark saving is done via the `+ (void)saveURL:(NSString *)url title:(NSString
 ## Notes
 
 - The Read It Later API requires an [API Key](http://readitlaterlist.com/api/signup/). In order to use the TJReadItLater object, you must fill in `API_KEY` and `APP_NAME` in TJReadItLater.m. There is a `#warning` highlighting this.
+- Using TJReadLater? Please email about it, I'd love your feedback! [tijoinc@gmail.com](mailto:tijoinc@gmail.com)
 
 ## TBD
 
