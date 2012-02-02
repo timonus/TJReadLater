@@ -1,10 +1,10 @@
 # TJReadLater
 
-Stupidly easy support for the [Instapaper](http://www.instapaper.com), [Read It Later](http://www.readitlater.com), [Pinboard](http://pinboard.in/), [Kippt](http://kippt.com/), and [Delicious](http://www.delicious.com) bookmarking services on the iOS. Just `#import "TJReadLater.h"` and let 'er rip!
+Stupidly easy support for the [Instapaper](http://www.instapaper.com), [Read It Later](http://www.readitlater.com), [Readability](http://www.readability.com/), [Pinboard](http://pinboard.in/), [Kippt](http://kippt.com/), and [Delicious](http://www.delicious.com) bookmarking services on the iOS. Just `#import "TJReadLater.h"` and let 'er rip!
 
 ## TJReadingService
 
-Each of the `TJInstapaper`, `TJReadItLater`, `TJPinboard`, `TJKippt`, and `TJDelicious` objects inherit from the `TJReadingService` object which exposes a common inerface for two simple bookmarking actions: **authorization**, and **saving a bookmark**. These are implemented as simple class methods with callbacks in the form of blocks, there is optional **authorization UI** added for convenience. You can access all of the available reading services by calling `+ (NSArray *)readingServices` on `TJReadingService`.
+Each of the `TJInstapaper`, `TJReadItLater`, `TJReadability`, `TJPinboard`, `TJKippt`, and `TJDelicious` objects inherit from the `TJReadingService` object which exposes a common inerface for two simple bookmarking actions: **authorization**, and **saving a bookmark**. These are implemented as simple class methods with callbacks in the form of blocks, there is optional **authorization UI** added for convenience. You can access all of the available reading services by calling `+ (NSArray *)readingServices` on `TJReadingService`.
 
 ## Authorization
 
@@ -23,11 +23,11 @@ Bookmark saving is done via the `+ (void)saveURL:(NSString *)url title:(NSString
 ## Notes
 
 - The Read It Later API requires an [API Key](http://readitlaterlist.com/api/signup/). In order to use the TJReadItLater object, you must fill in `API_KEY` and `APP_NAME` in TJReadItLater.m. There is a `#warning` highlighting this.
-- Using TJReadLater? Please email about it, I'd love your feedback! [tijoinc@gmail.com](mailto:tijoinc@gmail.com)
+- The Read It Later API requires [OAuth keys](http://readitlaterlist.com/api/signup/). In order to use the TJReadability object, you must fill in `OAUTH_CONSUMER_KEY` and `OAUTH_CONSUMER_SECRET` in TJReadability.m. There is a `#warning` highlighting this.
+- Using TJReadLater? Please email about it, I'd love to hear about it! [tijoinc@gmail.com](mailto:tijoinc@gmail.com)
 
 ## TBD
 
 - Make `saveURL:title:callback:` take `id` for URL and use either `NSURL` or `NSString`
 - Provide more descriptive error messages in the callbacks
 - Upgrade `TJDelicious` to use the del.icio.us v2 API
-- Add [Readability](http://www.readability.com/) support (functioning in the school branch)
