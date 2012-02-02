@@ -8,5 +8,6 @@
 #import "TJDelicious.h"
 #import "TJPinboard.h"
 #import "TJKippt.h"
+#import "TJReadability.h"
 
 #import "TJReadingServiceViewController.h"
