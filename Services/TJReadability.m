@@ -2,11 +2,8 @@
 // By Tim Johnsen
 
 #import "TJReadability.h"
+#import "TJReadLaterConfig.h"
 #import "OAHMAC_SHA1SignatureProvider.h"
-
-#warning Missing Readability Credentials
-#define OAUTH_CONSUMER_KEY @"<Your Consumer Key>"
-#define OAUTH_CONSUMER_SECRET @"<Your Consumer Secret>"
 
 #pragma mark -
 #pragma mark Categories
@@ -117,8 +114,11 @@
 		
 		// OAuth Spec, Section 9.1.1 "Normalize Request Parameters"
 		// Build a sorted array of both request parameters and OAuth header parameters
+		
+		
+		
 		NSMutableArray *parameterPairs = [[NSMutableArray alloc] initWithObjects:
-										  [NSDictionary dictionaryWithObjectsAndKeys:OAUTH_CONSUMER_KEY, @"value", @"oauth_consumer_key", @"key", nil],
+										  [NSDictionary dictionaryWithObjectsAndKeys:(NSString *)kTJReadLaterReadabilityOAuthConsumerKey, @"value", @"oauth_consumer_key", @"key", nil],
 										  [NSDictionary dictionaryWithObjectsAndKeys:[signatureProvider name], @"value", @"oauth_signature_method", @"key", nil],
 										  [NSDictionary dictionaryWithObjectsAndKeys:timestamp, @"value", @"oauth_timestamp", @"key", nil],
 										  [NSDictionary dictionaryWithObjectsAndKeys:nonce, @"value", @"oauth_nonce", @"key", nil],
@@ -147,14 +147,14 @@
 		
 		// Sign
 		// Secrets must be urlencoded before concatenated with '&'
-		NSString *secret = [NSString stringWithFormat:@"%@&", [OAUTH_CONSUMER_SECRET URLEncodedString]];
+		NSString *secret = [NSString stringWithFormat:@"%@&", [(NSString *)kTJReadLaterReadabilityOAuthConsumerSecret URLEncodedString]];
 		NSString *signature = [signatureProvider signClearText:signatureBaseString withSecret:secret];
 
 		NSString *oauthHeader = [NSString stringWithFormat:@"OAuth oauth_nonce=\"%@\", oauth_signature_method=\"%@\", oauth_timestamp=\"%@\", oauth_consumer_key=\"%@\", oauth_signature=\"%@\", oauth_version=\"1.0\"",
 								 [nonce URLEncodedString],
 								 [[signatureProvider name] URLEncodedString],
 								 [timestamp URLEncodedString],
-								 [OAUTH_CONSUMER_KEY URLEncodedString],
+								 [(NSString *)kTJReadLaterReadabilityOAuthConsumerKey URLEncodedString],
 								 [signature URLEncodedString]];
 		
 		[signatureProvider release];

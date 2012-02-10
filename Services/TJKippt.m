@@ -14,14 +14,14 @@
 }
 
 + (NSString *)signUpURL {
-	return @"http://kippt.com/signup";
+	return @"https://kippt.com/signup";
 }
 
 #pragma mark -
 #pragma mark Private
 
 + (NSURLRequest *)_requestForAuthWithUsername:(NSString *)username password:(NSString *)password {
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://kippt.com/api/v0/account/verify/"]]];
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://kippt.com/api/v0/account/verify/"]]];
 	[request setValue:[NSString stringWithFormat:@"Basic %@", [[[NSString stringWithFormat:@"%@:%@", username, password] dataUsingEncoding:NSUTF8StringEncoding] base64EncodedString]] forHTTPHeaderField:@"Authorization"];
 	
 	[request setHTTPMethod:@"GET"];
@@ -30,7 +30,7 @@
 }
 
 + (NSURLRequest *)_requestForSaveURL:(NSString *)url title:(NSString *)title {
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://kippt.com/api/v0/clips/"]]];
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://kippt.com/api/v0/clips/"]]];
 	[request setHTTPMethod:@"POST"];
 	[request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 	
