@@ -9,7 +9,7 @@
 #pragma mark Categories
 
 // NSURL Category for OAuth
-// Courtest of SSOAuthKit: 
+// Courtesy of SSOAuthKit: 
 
 @interface NSURL (OAuth)
 
@@ -42,7 +42,7 @@
 @end
 
 // NSString URL Encoding Category
-// Courtest of SSToolkit: http://sstoolk.it/
+// Courtesy of SSToolkit: http://sstoolk.it/
 
 @interface NSString (URLEncoding)
 
