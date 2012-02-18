@@ -5,9 +5,9 @@
 #pragma mark Read It Later
 
 #warning Missing Read It Later Credentials
-const NSString *kTJReadLaterReadItLaterAPIKey = @"";
-const NSString *kTJReadLaterReadItLaterAppName = @"";
+#define kTJReadLaterReadItLaterAPIKey @""
+#define kTJReadLaterReadItLaterAppName @""
 
 #warning Missing Readability Credentials
-const NSString *kTJReadLaterReadabilityOAuthConsumerKey = @"";
-const NSString *kTJReadLaterReadabilityOAuthConsumerSecret = @"";
+#define kTJReadLaterReadabilityOAuthConsumerKey @""
+#define kTJReadLaterReadabilityOAuthConsumerSecret @""
