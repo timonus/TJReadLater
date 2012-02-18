@@ -61,6 +61,12 @@
 #pragma mark -
 #pragma mark TJReadability
 
+@interface TJReadability ()
+
++ (NSMutableURLRequest *)_requestWithBaseURL:(NSURL *)url OAuthToken:(NSString *)token tokenSecret:(NSString *)tokenSecret method:(NSString *)method parameters:(NSDictionary *)parameters;
+
+@end
+
 @implementation TJReadability
 
 #pragma mark -
@@ -93,83 +99,9 @@
 
 + (void)authorizeWithUsername:(NSString *)username password:(NSString *)password callback:(void (^)(BOOL))callback {
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		NSMutableDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:username, @"x_auth_username", password, @"x_auth_password", @"client_auth", @"x_auth_mode", nil];
 		
-		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://www.readability.com/api/rest/v1/oauth/access_token"]];
-		[request setHTTPMethod:@"POST"];
-		
-		// OAuth fields
-		// Courtesy of SSOAuthKit: https://github.com/samsoffes/ssoauthkit
-		
-		// Signature provider
-		id<OASignatureProviding> signatureProvider = [[OAHMAC_SHA1SignatureProvider alloc] init];
-		
-		// Timestamp
-		NSString *timestamp = [NSString stringWithFormat:@"%d", time(NULL)];
-		
-		// Nonce
-		CFUUIDRef theUUID = CFUUIDCreate(NULL);
-		CFStringRef UUIDString = CFUUIDCreateString(NULL, theUUID);
-		CFRelease(theUUID);
-		NSString *nonce = [(NSString *)UUIDString autorelease];
-		
-		// OAuth Spec, Section 9.1.1 "Normalize Request Parameters"
-		// Build a sorted array of both request parameters and OAuth header parameters
-		
-		
-		
-		NSMutableArray *parameterPairs = [[NSMutableArray alloc] initWithObjects:
-										  [NSDictionary dictionaryWithObjectsAndKeys:(NSString *)kTJReadLaterReadabilityOAuthConsumerKey, @"value", @"oauth_consumer_key", @"key", nil],
-										  [NSDictionary dictionaryWithObjectsAndKeys:[signatureProvider name], @"value", @"oauth_signature_method", @"key", nil],
-										  [NSDictionary dictionaryWithObjectsAndKeys:timestamp, @"value", @"oauth_timestamp", @"key", nil],
-										  [NSDictionary dictionaryWithObjectsAndKeys:nonce, @"value", @"oauth_nonce", @"key", nil],
-										  [NSDictionary dictionaryWithObjectsAndKeys:@"1.0", @"value", @"oauth_version", @"key", nil],
-										  [NSDictionary dictionaryWithObjectsAndKeys:username, @"value", @"x_auth_username", @"key", nil],
-										  [NSDictionary dictionaryWithObjectsAndKeys:password, @"value", @"x_auth_password", @"key", nil],
-										  [NSDictionary dictionaryWithObjectsAndKeys:@"client_auth", @"value", @"x_auth_mode", @"key", nil],
-										  nil];
-		
-		NSArray *sortedPairs = [parameterPairs sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-			return [[obj1 objectForKey:@"key"] compare:[obj2 objectForKey:@"key"]];
-		}];
-		[parameterPairs release];
-		
-		NSMutableArray *pieces = [[NSMutableArray alloc] init];
-		for (NSDictionary *pair in sortedPairs) {
-			[pieces addObject:[NSString stringWithFormat:@"%@=%@", [[pair objectForKey:@"key"] URLEncodedString], [[pair objectForKey:@"value"] URLEncodedString]]];
-		}
-		NSString *normalizedRequestParameters = [pieces componentsJoinedByString:@"&"];
-		[pieces release];
-
-		// OAuth Spec, Section 9.1.2 "Concatenate Request Elements"
-		NSString *signatureBaseString = [NSString stringWithFormat:@"%@&%@&%@", [request HTTPMethod],
-										 [[[request URL] OAuthString] URLEncodedString],
-										 [normalizedRequestParameters URLEncodedString]];
-		
-		// Sign
-		// Secrets must be urlencoded before concatenated with '&'
-		NSString *secret = [NSString stringWithFormat:@"%@&", [(NSString *)kTJReadLaterReadabilityOAuthConsumerSecret URLEncodedString]];
-		NSString *signature = [signatureProvider signClearText:signatureBaseString withSecret:secret];
-
-		NSString *oauthHeader = [NSString stringWithFormat:@"OAuth oauth_nonce=\"%@\", oauth_signature_method=\"%@\", oauth_timestamp=\"%@\", oauth_consumer_key=\"%@\", oauth_signature=\"%@\", oauth_version=\"1.0\"",
-								 [nonce URLEncodedString],
-								 [[signatureProvider name] URLEncodedString],
-								 [timestamp URLEncodedString],
-								 [(NSString *)kTJReadLaterReadabilityOAuthConsumerKey URLEncodedString],
-								 [signature URLEncodedString]];
-		
-		[signatureProvider release];
-		
-		[request setValue:oauthHeader forHTTPHeaderField:@"Authorization"];
-		
-		// xAuth Fields
-		
-		[request setHTTPBody:[[NSString stringWithFormat:@"x_auth_username=%@&x_auth_password=%@&x_auth_mode=client_auth", username, password] dataUsingEncoding:NSUTF8StringEncoding]];
-		
-		// Other Fields
-		
-		[request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
-		[request setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-		[request setValue:@"close" forHTTPHeaderField:@"Connection"];
+		NSMutableURLRequest *request = [self _requestWithBaseURL:[NSURL URLWithString:@"https://www.readability.com/api/rest/v1/oauth/access_token"] OAuthToken:nil tokenSecret:nil method:@"POST" parameters:parameters];
 		
 		NSError *error = nil;
 		
@@ -211,7 +143,133 @@
 	});
 }
 
-// TODO: Get Auth Working
-// TODO: Abstract out OAuth request creator
++ (void)saveURL:(NSString *)url title:(NSString *)title callback:(void (^)(BOOL))callback {
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@Token", NSStringFromClass(self)]];
+		NSString *tokenSecret = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@TokenSecret", NSStringFromClass(self)]];
+		
+		NSMutableURLRequest *request = [self _requestWithBaseURL:[NSURL URLWithString:@"https://www.readability.com/api/rest/v1/bookmarks"] OAuthToken:token tokenSecret:tokenSecret method:@"POST" parameters:[NSDictionary dictionaryWithObject:url forKey:@"url"]];
+		
+		NSError *error = nil;
+		NSURLResponse *response = nil;
+		
+		[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+		
+		BOOL success = NO;
+		
+		if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+			success = !error && ([(NSHTTPURLResponse *)response statusCode] == 202 || [(NSHTTPURLResponse *)response statusCode] == 409);
+		}
+		
+		if (callback) {
+			dispatch_async(dispatch_get_main_queue(), ^{
+				callback(success);
+			});
+		}
+	});
+}
+
+#pragma mark -
+#pragma mark Private
+
++ (NSMutableURLRequest *)_requestWithBaseURL:(NSURL *)url OAuthToken:(NSString *)token tokenSecret:(NSString *)tokenSecret method:(NSString *)method parameters:(NSDictionary *)parameters {
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+	[request setHTTPMethod:method];
+	
+	// OAuth fields
+	// Courtesy of SSOAuthKit: https://github.com/samsoffes/ssoauthkit
+	
+	// Signature provider
+	id<OASignatureProviding> signatureProvider = [[OAHMAC_SHA1SignatureProvider alloc] init];
+	
+	// Timestamp
+	NSString *timestamp = [NSString stringWithFormat:@"%d", time(NULL)];
+	
+	// Nonce
+	CFUUIDRef theUUID = CFUUIDCreate(NULL);
+	CFStringRef UUIDString = CFUUIDCreateString(NULL, theUUID);
+	CFRelease(theUUID);
+	NSString *nonce = [(NSString *)UUIDString autorelease];
+	
+	// OAuth Spec, Section 9.1.1 "Normalize Request Parameters"
+	// Build a sorted array of both request parameters and OAuth header parameters
+	
+	NSMutableArray *parameterPairs = [[NSMutableArray alloc] initWithObjects:
+									  [NSDictionary dictionaryWithObjectsAndKeys:(NSString *)kTJReadLaterReadabilityOAuthConsumerKey, @"value", @"oauth_consumer_key", @"key", nil],
+									  [NSDictionary dictionaryWithObjectsAndKeys:[signatureProvider name], @"value", @"oauth_signature_method", @"key", nil],
+									  [NSDictionary dictionaryWithObjectsAndKeys:timestamp, @"value", @"oauth_timestamp", @"key", nil],
+									  [NSDictionary dictionaryWithObjectsAndKeys:nonce, @"value", @"oauth_nonce", @"key", nil],
+									  [NSDictionary dictionaryWithObjectsAndKeys:@"1.0", @"value", @"oauth_version", @"key", nil],
+									  nil];
+	
+	// Add token
+	if ([token length] > 0) {
+		[parameterPairs addObject:[NSDictionary dictionaryWithObjectsAndKeys:token, @"value", @"oauth_token", @"key", nil]];
+	}
+	
+	// Add other parameters
+	for (NSString *key in parameters) {
+		[parameterPairs addObject:[NSDictionary dictionaryWithObjectsAndKeys:key, @"key", [parameters objectForKey:key], @"value", nil]];
+	}
+	
+	NSArray *sortedPairs = [parameterPairs sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+		return [[obj1 objectForKey:@"key"] compare:[obj2 objectForKey:@"key"]];
+	}];
+	[parameterPairs release];
+	
+	NSMutableArray *pieces = [[NSMutableArray alloc] init];
+	for (NSDictionary *pair in sortedPairs) {
+		[pieces addObject:[NSString stringWithFormat:@"%@=%@", [[pair objectForKey:@"key"] URLEncodedString], [[pair objectForKey:@"value"] URLEncodedString]]];
+	}
+	NSString *normalizedRequestParameters = [pieces componentsJoinedByString:@"&"];
+	[pieces release];
+	
+	// OAuth Spec, Section 9.1.2 "Concatenate Request Elements"
+	NSString *signatureBaseString = [NSString stringWithFormat:@"%@&%@&%@", [request HTTPMethod],
+									 [[[request URL] OAuthString] URLEncodedString],
+									 [normalizedRequestParameters URLEncodedString]];
+	
+	// Sign
+	// Secrets must be urlencoded before concatenated with '&'
+	NSString *encodedTokenSecret = [tokenSecret length] > 0 ? [tokenSecret URLEncodedString] : @"";
+	NSString *secret = [NSString stringWithFormat:@"%@&%@", [(NSString *)kTJReadLaterReadabilityOAuthConsumerSecret URLEncodedString], encodedTokenSecret];
+	NSString *signature = [signatureProvider signClearText:signatureBaseString withSecret:secret];
+	
+	// Set OAuth headers
+	NSString *oauthToken = @"";
+	if ([token length] > 0) {
+		oauthToken = [NSString stringWithFormat:@"oauth_token=\"%@\", ", [token URLEncodedString]];
+	}
+	
+	NSString *oauthHeader = [NSString stringWithFormat:@"OAuth oauth_nonce=\"%@\", oauth_signature_method=\"%@\", oauth_timestamp=\"%@\", oauth_consumer_key=\"%@\", %@oauth_signature=\"%@\", oauth_version=\"1.0\"",
+							 [nonce URLEncodedString],
+							 [[signatureProvider name] URLEncodedString],
+							 [timestamp URLEncodedString],
+							 [(NSString *)kTJReadLaterReadabilityOAuthConsumerKey URLEncodedString],
+							 oauthToken,
+							 [signature URLEncodedString]];
+	
+	[signatureProvider release];
+	
+	[request setValue:oauthHeader forHTTPHeaderField:@"Authorization"];
+	
+	// Parameter Fields -> Body
+	
+	pieces = [[NSMutableArray alloc] init];
+	for (NSString *key in parameters) {
+		[pieces addObject:[NSString stringWithFormat:@"%@=%@", [key URLEncodedString], [[parameters objectForKey:key] URLEncodedString]]];
+	}
+	NSString *body = [pieces componentsJoinedByString:@"&"];
+	[request setHTTPBody:[body dataUsingEncoding:NSUTF8StringEncoding]];
+	[pieces release];
+	
+	// Other Fields
+	
+	[request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+	[request setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+	[request setValue:@"close" forHTTPHeaderField:@"Connection"];
+	
+	return request;
+}
 
 @end
