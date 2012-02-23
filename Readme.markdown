@@ -30,4 +30,5 @@ Bookmark saving is done via the `+ (void)saveURL:(NSString *)url title:(NSString
 
 - Make `saveURL:title:callback:` take `id` for URL and use either `NSURL` or `NSString`
 - Provide more descriptive error messages in the callbacks
+- Use newer, secure API endpoints that Instapaper and Read it Later provide for storing tokens rather than passwords.
 - Upgrade `TJDelicious` to use the del.icio.us v2 API
