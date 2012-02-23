@@ -10,7 +10,7 @@
 #pragma mark Strings
 
 + (NSString *)name {
-	return @"delicious";
+	return @"Delicious";
 }
 
 + (NSString *)signUpURL {
