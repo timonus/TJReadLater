@@ -4,7 +4,7 @@
 #pragma mark -
 #pragma mark Read It Later
 
-#warning Missing Read It Later Credentials
+#warning Missing Pocket Credentials
 #define kTJReadLaterReadItLaterAPIKey @""
 #define kTJReadLaterReadItLaterAppName @""
 

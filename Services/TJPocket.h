@@ -3,6 +3,6 @@
 
 #import "TJReadingService.h"
 
-@interface TJReadItLater : TJReadingService
+@interface TJPocket : TJReadingService
 
 @end

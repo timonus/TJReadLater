@@ -3,7 +3,7 @@
 
 #import "TJReadingService.h"
 
-#import "TJReadItLater.h"
+#import "TJPocket.h"
 #import "TJInstapaper.h"
 #import "TJDelicious.h"
 #import "TJPinboard.h"

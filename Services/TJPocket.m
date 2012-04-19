@@ -1,10 +1,10 @@
 // TJReadItLater
 // By Tim Johnsen
 
-#import "TJReadItLater.h"
+#import "TJPocket.h"
 #import "TJReadLaterConfig.h"
 
-@implementation TJReadItLater
+@implementation TJPocket
 
 #pragma mark -
 #pragma mark Strings
