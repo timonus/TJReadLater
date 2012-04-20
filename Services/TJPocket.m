@@ -10,11 +10,11 @@
 #pragma mark Strings
 
 + (NSString *)name {
-	return @"Read It Later";
+	return @"Pocket";
 }
 
 + (NSString *)signUpURL {
-	return @"http://readitlaterlist.com/signup";
+	return @"http://getpocket.com/signup/";
 }
 
 #pragma mark -
